@@ -1,6 +1,6 @@
-provider "aws" {
-  region = "us-east-1"
-}
+  provider "aws" {
+    region = "us-east-1"
+  }
 
 variable "vpc-cidr-block" {}
 variable "subnet-cidr-block" {}
@@ -113,6 +113,21 @@ resource "aws_instance" "myapp-server" {
 
   associate_public_ip_address = true
   key_name = aws_key_pair.ssh-key.key_name
+
+  #user_data = file("entry-script.sh")
+
+  connection {
+    type = "ssh"
+    host = self.public_ip
+    
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "export ENV=dev",
+      "mkdir newdir"
+    ]
+  }
 
   tags = {
     Name:"${var.env-prefix}-server"
