@@ -10,6 +10,7 @@ variable "env-prefix" {}
 variable "my-ip" {}
 variable "instance-type" {}
 variable "public-key-location" {}
+variable "private-key-location" {}
 
 
 resource "aws_vpc" "myapp-vpc" {
@@ -114,20 +115,27 @@ resource "aws_instance" "myapp-server" {
   associate_public_ip_address = true
   key_name = aws_key_pair.ssh-key.key_name
 
-  #user_data = file("entry-script.sh")
+  user_data = file("entry-script.sh")
 
-  connection {
-    type = "ssh"
-    host = self.public_ip
-    
-  }
+  # connection {
+  #   type = "ssh"
+  #   host = self.public_ip
+  #   user = "ec2-user"
+  #   private_key = file(var.private-key-location)
+  # }
 
-  provisioner "remote-exec" {
-    inline = [
-      "export ENV=dev",
-      "mkdir newdir"
-    ]
-  }
+  # provisioner "file" {
+  #   source = "entry-script.sh"
+  #   destination = "/home/ec2-user/entry-script-on-ec2.sh"
+  # }
+
+  # provisioner "remote-exec" {
+  #   script = file("entry-script-on-ec2.sh")
+  # }
+
+  # provisioner "local-exec" {
+  #   command = "echo ${self.public_ip}>output.txt"
+  # }
 
   tags = {
     Name:"${var.env-prefix}-server"
