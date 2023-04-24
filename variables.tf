@@ -1,0 +1,9 @@
+variable "vpc-cidr-block" {}
+variable "subnet-cidr-block" {}
+variable "avail_zone" {}
+variable "env-prefix" {}
+variable "my-ip" {}
+variable "instance-type" {}
+variable "public-key-location" {}
+variable "private-key-location" {}
+variable "image-name" {}
