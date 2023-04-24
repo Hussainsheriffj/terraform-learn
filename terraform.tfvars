@@ -1,9 +1,3 @@
-vpc-cidr-block="10.0.0.0/16"
-subnet-cidr-block = "10.0.10.0/24"
-avail_zone = "us-east-1b"
-env-prefix = "dev"
-my-ip = "223.178.86.221/32"
-instance-type = "t2.micro"
-public-key-location="/Users/hussain.sheriff/.ssh/id_rsa.pub"
-private-key-location="/Users/hussain.sheriff/.ssh/id_rsa"
-image-name = "amzn2-ami-kernel-5.10-hvm-*-x86_64-gp2"
+vpc_cidr_block = "10.0.0.0/16"
+private_subnet_cidr_blocks = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24", "10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+public_subnet_cidr_blocks = ["10.0.7.0/24", "10.0.8.0/24", "10.0.9.0/24", "10.0.10.0/24", "10.0.11.0/24", "10.0.12.0/24"]
