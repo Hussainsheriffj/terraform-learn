@@ -1,10 +1,9 @@
   provider "aws" {
-    region = "us-east-1"
+    region = "us-west-1"
   }
 
 variable "vpc-cidr-block" {}
 variable "subnet-cidr-block" {}
-
 variable "avail_zone" {}
 variable "env-prefix" {}
 variable "my-ip" {}
@@ -46,6 +45,11 @@ resource "aws_default_route_table" "main-rtb" {
   tags = {
     Name: "${var.env-prefix}-main-rtb"
   }
+}
+
+resource "aws_route_table_association" "a-rtb-subnet" {
+  subnet_id = aws_subnet.myapp-subnet-1.id
+  route_table_id = aws_default_route_table.main-rtb.id
 }
 
 resource "aws_default_security_group" "default-sg" {
@@ -114,7 +118,7 @@ resource "aws_instance" "myapp-server" {
   associate_public_ip_address = true
   key_name = aws_key_pair.ssh-key.key_name
 
-  user_data = file("entry-script.sh")
+  #user_data = file("entry-script.sh")  we are going to configure through absible so remoing user data
 
   tags = {
     Name:"${var.env-prefix}-server"
